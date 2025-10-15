@@ -25,6 +25,26 @@ app.get("/user/getallusers", (req, res) => {
             return res.json({ message: err.message });
         });
 });
+app.get('/user/delete/:id', (req, res) => {
+    const { id } = req.params;
+    User.findByIdAndDelete(id)
+        .then((data) => {
+            return res.json({ message: "User Deleted", data });
+        })
+        .catch((err) => {
+            return res.json({ message: err.message });
+        })
+});
+app.post('/user/update/:id', (req, res) => {
+    const { id } = req.params;
+    User.findByIdAndUpdate(id, req.body)
+        .then((data) => {
+            return res.json({ message: "User Updated",id:id});
+        })
+        .catch((err)=>{
+            return res.json({ message: err.message });
+        })
+});
 app.listen(port, (err) => {
     if (err) {
         console.log(err);
